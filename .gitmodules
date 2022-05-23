@@ -1,3 +1,6 @@
 [submodule "webserv"]
 	path = webserv
 	url = git@github.com:socketsocket/active_team
+[submodule "ft_transcendence"]
+	path = ft_transcendence
+	url = git@github.com:trapscendence/ft_transcendence
