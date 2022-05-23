@@ -1,0 +1,357 @@
+{
+	"annotations": {
+	  "list": [
+		{
+		  "builtIn": 1,
+		  "datasource": "-- Grafana --",
+		  "enable": true,
+		  "hide": true,
+		  "iconColor": "rgba(0, 211, 255, 1)",
+		  "name": "Annotations & Alerts",
+		  "type": "dashboard"
+		}
+	  ]
+	},
+	"editable": true,
+	"gnetId": null,
+	"graphTooltip": 0,
+	"id": 4,
+	"links": [],
+	"panels": [
+	  {
+		"datasource": "InfluxDB",
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "continuous-GrYlRd"
+			},
+			"custom": {},
+			"displayName": "Usage of CPU",
+			"mappings": [],
+			"max": 80,
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			},
+			"unit": "percent"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 10,
+		  "w": 6,
+		  "x": 0,
+		  "y": 0
+		},
+		"id": 2,
+		"options": {
+		  "colorMode": "value",
+		  "graphMode": "area",
+		  "justifyMode": "auto",
+		  "orientation": "auto",
+		  "reduceOptions": {
+			"calcs": [
+			  "last"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "textMode": "auto"
+		},
+		"pluginVersion": "7.3.6",
+		"targets": [
+		  {
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "linear"
+				],
+				"type": "fill"
+			  }
+			],
+			"hide": false,
+			"measurement": "cpu",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"query": "SELECT last(\"usage_user\") + last(\"usage_system\") AS \"usage_total\" FROM \"cpu\" WHERE (\"host\" = 'ftps') AND $timeFilter GROUP BY time($__interval) fill(linear)",
+			"queryType": "randomWalk",
+			"rawQuery": true,
+			"refId": "A",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"usage_user"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				}
+			  ],
+			  [
+				{
+				  "params": [
+					"usage_system"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "host",
+				"operator": "=",
+				"value": "ftps"
+			  }
+			]
+		  }
+		],
+		"timeFrom": null,
+		"timeShift": null,
+		"title": "CPU",
+		"type": "stat"
+	  },
+	  {
+		"datasource": "InfluxDB",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "continuous-GrYlRd"
+			},
+			"custom": {},
+			"displayName": "Usage of Memory",
+			"mappings": [],
+			"max": 80,
+			"min": 0,
+			"thresholds": {
+			  "mode": "percentage",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			},
+			"unit": "percent"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 6,
+		  "w": 8,
+		  "x": 6,
+		  "y": 0
+		},
+		"id": 4,
+		"options": {
+		  "colorMode": "value",
+		  "graphMode": "area",
+		  "justifyMode": "auto",
+		  "orientation": "auto",
+		  "reduceOptions": {
+			"calcs": [
+			  "last"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "textMode": "value_and_name"
+		},
+		"pluginVersion": "7.3.6",
+		"targets": [
+		  {
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "null"
+				],
+				"type": "fill"
+			  }
+			],
+			"measurement": "mem",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"query": "SELECT \"used_percent\" FROM \"mem\" WHERE (\"host\" = 'ftps') AND $timeFilter GROUP BY time($__interval) fill(null)",
+			"queryType": "randomWalk",
+			"rawQuery": false,
+			"refId": "A",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"used_percent"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "last"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "host",
+				"operator": "=",
+				"value": "ftps"
+			  }
+			]
+		  }
+		],
+		"timeFrom": null,
+		"timeShift": null,
+		"title": "Memory",
+		"type": "stat"
+	  },
+	  {
+		"datasource": "InfluxDB",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "continuous-GrYlRd"
+			},
+			"custom": {},
+			"displayName": "Usage of Disk",
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			}
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 4,
+		  "w": 8,
+		  "x": 6,
+		  "y": 6
+		},
+		"id": 6,
+		"options": {
+		  "colorMode": "value",
+		  "graphMode": "area",
+		  "justifyMode": "auto",
+		  "orientation": "auto",
+		  "reduceOptions": {
+			"calcs": [
+			  "mean"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "textMode": "auto"
+		},
+		"pluginVersion": "7.3.6",
+		"targets": [
+		  {
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "null"
+				],
+				"type": "fill"
+			  }
+			],
+			"measurement": "disk",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"queryType": "randomWalk",
+			"refId": "A",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"used_percent"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "last"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "host",
+				"operator": "=",
+				"value": "ftps"
+			  }
+			]
+		  }
+		],
+		"timeFrom": null,
+		"timeShift": null,
+		"title": "Disk",
+		"type": "stat"
+	  }
+	],
+	"schemaVersion": 26,
+	"style": "dark",
+	"tags": [
+	  "ft-services",
+	  "ftps"
+	],
+	"templating": {
+	  "list": []
+	},
+	"time": {
+	  "from": "now-6h",
+	  "to": "now"
+	},
+	"timepicker": {},
+	"timezone": "",
+	"title": "FTPs-Dashboard",
+	"uid": "abcdef",
+	"version": 3
+  }
